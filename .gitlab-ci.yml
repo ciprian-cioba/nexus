@@ -1,0 +1,17 @@
+# .gitlab-ci.yml
+# Builds the Nexus Arena game and deploys it to GitLab Pages
+
+image: node:latest
+
+# Only run on pushes to the main branch (adjust to 'master' if needed)
+pages:
+  stage: deploy
+  script:
+    - node build.js
+  artifacts:
+    paths:
+      - dist
+    expire_in: 30 days
+  only:
+    - main
+  environment: production
