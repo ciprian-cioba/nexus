@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
+<title>Nexus Arena</title>
+<style>
+<!--CSS_PLACEHOLDER-->
+</style>
+</head>
+<body>
+<body>
+<div class="app">
+  <header>
+    <button class="hdr-btn" onclick="G.openSaveMenu()">💾</button>
+    <div class="res-grid">
+      <div class="res-item">LV <span id="lv">1</span></div>
+      <div class="res-item" style="color:var(--warn)">💰 <span id="gd">0</span></div>
+      <div class="res-item" style="color:#f59e0b">🏆 <span id="tp">0</span></div>
+      <div class="res-item" style="color:var(--good)">XP <span id="xp">0</span></div>
+    </div>
+    <button class="hdr-btn" id="char-badge" onclick="G.openSaveMenu()" style="color:var(--warn);font-size:0.60rem">P1</button>
+    <button class="hdr-btn" onclick="G.openEditor()">⚙️</button>
+    <button class="hdr-btn" onclick="G.openSessionMenu()" title="Save/Load/Demo">💿</button>
+  </header>
+
+  <div class="main-view" id="main-view">
+    <div id="hero-pick"></div>
+    <div id="game-ui" class="hidden">
+
+      <div id="p-card" class="unit-card" style="border-left-color:var(--prim)">
+        <div style="display:flex;justify-content:space-between;align-items:center;font-size:0.73rem;font-weight:900">
+          <span id="p-name">YOU</span>
+          <span style="display:flex;align-items:center;gap:3px">
+            <span id="stance-badge" class="stance-badge hidden"></span>
+            <span id="p-s" style="font-size:0.58rem;color:var(--good)"></span>
+          </span>
+        </div>
+        <div class="hp-box"><div id="p-f" class="hp-fill"></div><div id="p-t" class="hp-txt">0/0</div></div>
+        <div class="en-box">
+          <div id="en-f" class="en-fill"></div>
+          <span id="en-regen-lbl" class="en-regen-lbl"></span>
+        </div>
+        <div class="status-row" id="p-status"></div>
+      </div>
+
+      <div id="e-card" class="unit-card hidden" style="border-left-color:var(--bad)">
+        <div style="display:flex;justify-content:space-between;font-size:0.73rem;font-weight:900">
+          <span id="e-n-disp">ENEMY</span><span id="e-s" style="font-size:0.58rem;color:var(--bad)"></span>
+        </div>
+        <div class="hp-box"><div id="e-f" class="hp-fill"></div><div id="e-t" class="hp-txt">0/0</div></div>
+        <div class="status-row" id="e-status"></div>
+        <div id="e-intent" class="intent-box hidden">
+          <div class="intent-row"><span id="intent-lbl">—</span><span id="intent-cd" style="font-size:0.57rem;font-family:monospace;color:#555">—</span></div>
+          <div class="intent-bar-bg"><div id="intent-fill" class="intent-bar-fill" style="width:100%"></div></div>
+        </div>
+      </div>
+
+      <div id="dps-live" class="dps-live">
+        <div class="dps-col"><div class="dps-lbl">YOU DPS</div><div class="dps-val" id="p-dps" style="color:var(--good)">0</div></div>
+        <div class="dps-div"></div>
+        <div class="dps-col"><div class="dps-lbl">YOU TOT</div><div class="dps-val" id="p-tot" style="color:var(--good)">0</div></div>
+        <div class="dps-div"></div>
+        <div class="dps-col"><div class="dps-lbl">FOE DPS</div><div class="dps-val" id="e-dps" style="color:var(--bad)">0</div></div>
+        <div class="dps-div"></div>
+        <div class="dps-col"><div class="dps-lbl">FOE TOT</div><div class="dps-val" id="e-tot" style="color:var(--bad)">0</div></div>
+        <div class="dps-div"></div>
+        <div class="dps-col"><div class="dps-lbl">TIME</div><div class="dps-val" id="turn-n" style="color:#555">0</div></div>
+      </div>
+
+      <div id="dps-recap" class="dps-recap">
+        <div class="recap-hdr">
+          <span class="recap-title">⚔️ LAST FIGHT</span>
+          <button class="recap-dismiss" onclick="G.dismissRecap()">✕</button>
+        </div>
+        <div class="recap-nums">
+          <div class="recap-num"><div class="recap-num-lbl">Duration</div><div class="recap-num-val" id="rec-dur" style="color:var(--warn)">—</div></div>
+          <div class="recap-num"><div class="recap-num-lbl">Dealt</div><div class="recap-num-val" id="rec-dmg" style="color:var(--bad)">—</div></div>
+          <div class="recap-num"><div class="recap-num-lbl">DPS</div><div class="recap-num-val" id="rec-dps" style="color:var(--good)">—</div></div>
+        </div>
+        <div id="rec-breakdown"></div>
+        <div style="margin-top:6px;display:flex;gap:5px">
+          <div class="recap-num" style="flex:1"><div class="recap-num-lbl">Taken</div><div class="recap-num-val" id="rec-taken" style="color:var(--bad);font-size:0.8rem">—</div></div>
+          <div class="recap-num" style="flex:1"><div class="recap-num-lbl">Int Hit/Miss</div><div class="recap-num-val" id="rec-int" style="color:#f97316;font-size:0.8rem">—</div></div>
+        </div>
+      </div>
+
+      <div class="tabs" id="main-tabs">
+        <button class="tab-btn active" onclick="G.tab('camp')">⚔️ GEAR</button>
+        <button class="tab-btn" onclick="G.tab('shop')">🛒 SHOP</button>
+        <button class="tab-btn" onclick="G.tab('train')">🏋️ TRAIN</button>
+        <button class="tab-btn" onclick="G.tab('stats')">📊 STATS</button>
+        <button class="tab-btn" onclick="G.tab('log')">📜 LOG</button>
+      </div>
+      <div id="tab-content">
+        <div id="v-camp"><div id="eq-grid" class="eq-grid"></div><div id="inv-grid"></div></div>
+        <div id="v-shop" class="hidden">
+          <div id="shop-list"></div>
+          <div style="display:flex;gap:5px;margin-top:5px">
+            <button class="btn" style="flex:1;background:var(--prim);border-color:var(--prim);padding:10px 0" onclick="G.restock(false)">REFRESH SHOP</button>
+            <div id="shop-badge" style="background:#0a0d13;border:1px solid var(--bord);border-radius:6px;padding:6px 10px;font-size:0.58rem;text-align:center;color:var(--warn);font-weight:900;white-space:nowrap;display:flex;flex-direction:column;align-items:center;justify-content:center"></div>
+          </div>
+        </div>
+        <div id="v-train" class="hidden">
+          <div class="info-box">Training costs 🏆 Trophies (permanent). Forge costs 💰 Gold (upgrades item).</div>
+          <div class="train-grid" id="train-grid"></div>
+          <div class="section-title" style="margin-top:12px">⚒️ ITEM FORGE</div>
+          <div id="forge-grid"></div>
+        </div>
+        <div id="v-stats" class="hidden"><div id="stats-content"></div></div>
+        <div id="v-log" class="hidden">
+          <button id="copy-btn" class="btn" style="width:100%;margin-bottom:6px;font-size:0.60rem" onclick="G.copyLog()">📋 COPY LOG</button>
+          <div id="log"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="controls" id="controls">
+    <div class="duel-hud">
+      <div class="hud-row"><span style="color:#2d3748">YOU:</span><span id="hud-p" style="color:var(--prim)">—</span></div>
+      <div class="hud-row"><span style="color:#2d3748">FOE:</span><span id="hud-e" style="color:var(--bad)">—</span></div>
+    </div>
+
+    <div class="gcd-area" id="gcd-area">
+      <div class="gcd-track"><div id="gcd-fill" class="gcd-fill"></div></div>
+      <div class="queue-box" id="queue-box">
+        <span class="queue-prompt">NEXT</span>
+        <div class="queue-slot" id="queue-slot">
+          <span class="queue-empty">— press a skill to queue —</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="swing-wrap" id="swing-wrap">
+      <div class="swing-label">
+        <span>⚔️ AUTO SWING</span>
+        <span id="swing-cd-txt"></span>
+      </div>
+      <div class="swing-track"><div id="swing-fill" class="swing-fill"></div></div>
+    </div>
+
+    <div class="fight-bar" id="fight-bar">
+      <button class="fight-btn" id="fight-btn" onclick="G.battle()">⚔️ ENTER ARENA</button>
+      <button class="switch-mid" onclick="G.battleDummy()" style="background:var(--warn);border-color:var(--warn);color:#000">🎯<br><span style="font-size:0.44rem">DUMMY</span></button>
+      <button class="switch-mid" onclick="G.openSaveMenu()">👥<br><span style="font-size:0.44rem">SWITCH</span></button>
+    </div>
+
+    <div class="skill-area" id="skill-area">
+      <div class="skill-row" id="skill-row1" style="grid-template-columns:repeat(4,1fr)"></div>
+      <div class="skill-row" id="skill-row2" style="grid-template-columns:repeat(5,1fr)"></div>
+    </div>
+  </div>
+</div>
+
+<div id="overlay" class="overlay hidden" onclick="G.closeModal()"></div>
+<div id="modal" class="modal hidden">
+  <h3 id="modal-title">—</h3>
+  <div id="modal-body"></div>
+  <div id="modal-actions" style="display:flex;gap:7px;margin-top:12px;justify-content:center;flex-wrap:wrap"></div>
+</div>
+
+
+<script>
+<!--JS_PLACEHOLDER-->
+</script>
+</body>
+</html>

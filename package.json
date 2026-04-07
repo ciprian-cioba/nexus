@@ -1,0 +1,25 @@
+{
+  "name": "nexus-arena",
+  "version": "1.4.3",
+  "description": "Nexus Arena - Browser-based RPG combat game (modular version)",
+  "main": "build.js",
+  "scripts": {
+    "build": "node build.js",
+    "serve": "npx http-server dist -p 8080 -o",
+    "start": "npm run build && npm run serve",
+    "watch": "nodemon --watch src --exec npm run build"
+  },
+  "keywords": [
+    "game",
+    "rpg",
+    "browser-game",
+    "html5"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {},
+  "optionalDependencies": {
+    "http-server": "^14.1.1",
+    "nodemon": "^3.0.1"
+  }
+}
