@@ -6,7 +6,7 @@ const DEF_CFG={
   xpBase:60,xpPerLv:22,shopBase:25,shopScale:1.5,
   itemLvScale:118,itemAtk:10,itemDef:5,itemHp:35,
   enemyBase:700,enemyEliteLv:6,enemyEliteScale:180,
-  enemyHp:10000,enemyAtk:45,enemyDef:16,enemyMaxOffset:15,
+  enemyHp:100000,enemyAtk:45,enemyDef:50,enemyMaxOffset:15,
   gcdMs:1500,swingMs:2000,energyMax:100,energyRegen:15,
   intentMs:1400,interruptMs:1400,
   eHvy:25,eStn:25,eBlk:15,eFo:30,eRa:30,ePo:35,
