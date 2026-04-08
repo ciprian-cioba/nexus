@@ -6,7 +6,7 @@ const DEF_CFG={
   xpBase:60,xpPerLv:22,shopBase:25,shopScale:1.5,
   itemLvScale:118,itemAtk:10,itemDef:5,itemHp:35,
   enemyBase:700,enemyEliteLv:6,enemyEliteScale:180,
-  enemyHp:1000,enemyAtk:45,enemyDef:16,enemyMaxOffset:15,
+  enemyHp:10000,enemyAtk:45,enemyDef:16,enemyMaxOffset:15,
   gcdMs:1500,swingMs:2000,energyMax:100,energyRegen:15,
   intentMs:1400,interruptMs:1400,
   eHvy:25,eStn:25,eBlk:15,eFo:30,eRa:30,ePo:35,
@@ -16,8 +16,8 @@ const DEF_CFG={
   cdMend:12.5,cdEx:10,cdBs:10,cdEv:7.5,cdSb:7.5,cdTa:10,cdGu:10,cdBerserk:12.5,
   cdBleedAtk:7.5,cdExpAtk:7.5,interruptCd:15.0,
   // CRIT NERF: standard is 1.4x, Slayer is 1.8x.
-  multHvy:150,multEx:250,multExNorm:100,multStn:70,
-  multBs:150,multSbash:60,multCrit:140,multSlayerCrit:180,multPalBlock:300,
+  multHvy:110,multEx:250,multExNorm:100,multStn:70,
+  multBs:150,multSbash:60,multCrit:100,multSlayerCrit:180,multPalBlock:300,
 };
 
 const BD={
