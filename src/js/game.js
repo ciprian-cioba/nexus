@@ -1141,7 +1141,7 @@ class Arena {
     const pf=document.getElementById('p-f');
     pf.style.width=pPct+'%';pf.style.background=pPct>60?'#16a34a':pPct>30?'#d97706':'#dc2626';
     document.getElementById('p-t').innerText=Math.max(0,Math.ceil(st.p.chp))+' / '+s.hp;
-    document.getElementById('p-s').innerText='⚔️'+s.atk+' 🛡️'+s.def+' ⚡'+Math.floor(st.energy)
+    document.getElementById('p-s').innerText=Math.max(0,Math.ceil(st.p.chp))+' / '+s.hp +' ⚔️'+s.atk+' 🛡️'+s.def+' ⚡'+Math.floor(st.energy)
       +(s.acc>0.85?` 🎯${Math.round(s.acc*100)}%`:'')+
       (s.eva>0.05?` 💨${Math.round(s.eva*100)}%`:'');
     this._updateEnergyUI();
@@ -1164,7 +1164,7 @@ class Arena {
       const ef=document.getElementById('e-f');ef.style.width=ePct+'%';ef.style.background=ePct>60?'#dc2626':ePct>30?'#d97706':'#ff4500';
       document.getElementById('e-t').innerText=Math.max(0,Math.ceil(e.hp))+' / '+Math.ceil(e.mhp);
       const eAtk=Math.floor(e.atk*(1+(e.stallPenalty||0)*0.10)*eMults.atkM*(enraged?1.25:1));
-      document.getElementById('e-s').innerText='⚔️'+eAtk+' 🛡️'+Math.floor(e.def*eMults.defM)+(enraged?' 🔥':'');
+      document.getElementById('e-s').innerText=Math.max(0,Math.ceil(e.hp))+' / '+Math.ceil(e.mhp) +' ⚔️'+eAtk+' 🛡️'+Math.floor(e.def*eMults.defM)+(enraged?' 🔥':'');
       const es=document.getElementById('e-status');es.innerHTML='';
       if(st.eSt>0)   es.innerHTML+=`<span class="pip pip-stun">💤STUN (${st.eSt.toFixed(1)}s)</span>`;
       if(enraged)  es.innerHTML+='<span class="pip pip-enrage">🔥ENRAGE</span>';
